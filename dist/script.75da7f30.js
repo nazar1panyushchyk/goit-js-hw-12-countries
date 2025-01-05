@@ -127,13 +127,13 @@ var getDataContainer = document.querySelector('.data-container');
 console.log(getInput);
 console.log(getDataContainer);
 
-// import { fetchData } from './fetchCountries' 
-// console.log(fetchData);
+// import { fetchData } from './fetchCountries'   
+// console.log(fetchData);  
 
 var countriesApi = 'https://restcountries.com/v3.1/all?fields=name,capital,population,languages,flags';
 function fetchData(_x) {
   return _fetchData.apply(this, arguments);
-}
+} //script.js  
 function _fetchData() {
   _fetchData = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(search) {
     var getData;
@@ -165,36 +165,40 @@ function _fetchData() {
   }));
   return _fetchData.apply(this, arguments);
 }
-fetchData();
-
-//script.js
-function showCountriesData() {
+function showCountriesData(_x2) {
   return _showCountriesData.apply(this, arguments);
 }
 function _showCountriesData() {
-  _showCountriesData = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-    var getFetchData, inputValue, _filterCountries, _filterCountries2, name, flags, capital, population, languages, officialName, countryFlags, countryLanguages;
+  _showCountriesData = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(e) {
+    var edit, getFetchData, filterCountries;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) switch (_context2.prev = _context2.next) {
         case 0:
-          _context2.next = 2;
+          edit = e.target.value.trim().toLowerCase();
+          if (edit) {
+            _context2.next = 4;
+            break;
+          }
+          getDataContainer.innerHTML = "";
+          return _context2.abrupt("return");
+        case 4:
+          _context2.next = 6;
           return fetchData();
-        case 2:
-          getFetchData = _context2.sent;
-          inputValue = getInput.value.toLowerCase();
-          if (getFetchData) {
-            _filterCountries = getFetchData.find(function (country) {
-              return country.name.official.toLowerCase().includes(inputValue);
-            });
-          }
-          if (filterCountries) {
-            _filterCountries2 = filterCountries, name = _filterCountries2.name, flags = _filterCountries2.flags, capital = _filterCountries2.capital, population = _filterCountries2.population, languages = _filterCountries2.languages;
-            officialName = name.official;
-            countryFlags = flags.png;
-            countryLanguages = Object.values(languages).join(', ');
-            getDataContainer.innerHTML = "\n        <p>".concat(officialName, "</p>\n        <p>").concat(capital, "</p>\n        <p>").concat(population, "</p>\n\n        ");
-          }
         case 6:
+          getFetchData = _context2.sent;
+          filterCountries = getFetchData.filter(function (country) {
+            return country.name.official.toLowerCase().includes(edit);
+          });
+          if (filterCountries.length === 1) {
+            renderCountries(filterCountries[0]);
+          } else if (filterCountries.length > 1 && filterCountries.length <= 10) {
+            renderCountries(filterCountries);
+          } else if (filterCountries.length > 10) {
+            getDataContainer.innerHTML = "  \n        <p>\u0417\u0430\u0431\u0430\u0433\u0430\u0442\u043E \u0441\u043F\u0456\u0432\u043F\u0430\u0434\u0456\u043D\u044C, \u0437\u043C\u0456\u043D\u0456\u0442\u044C \u043F\u0430\u0440\u0430\u043C\u0435\u0442\u0440 \u043F\u043E\u0448\u0443\u043A\u0443.</p>";
+          } else {
+            getDataContainer.innerHTML = "  \n        <p>\u041D\u0435 \u0437\u043D\u0430\u0439\u0434\u0435\u043D\u043E</p>";
+          }
+        case 9:
         case "end":
           return _context2.stop();
       }
@@ -203,6 +207,24 @@ function _showCountriesData() {
   return _showCountriesData.apply(this, arguments);
 }
 showCountriesData();
+function renderCountries(country) {
+  var name = country.name,
+    flags = country.flags,
+    capital = country.capital,
+    population = country.population,
+    languages = country.languages;
+  var officialName = name.official;
+  var countryFlags = flags.png;
+  var countryLanguages = Object.values(languages).join(', ');
+  var alt = 'Прапор не знайдено';
+  getDataContainer.innerHTML = "  \n        <p>\u041D\u0430\u0437\u0432\u0430: ".concat(officialName, "</p>  \n        <p>\u0421\u0442\u043E\u043B\u0438\u0446\u044F: ").concat(capital, "</p>  \n        <p>\u041D\u0430\u0441\u0435\u043B\u0435\u043D\u043D\u044F: ").concat(population, "</p>  \n        <img alt='").concat(alt, "' src='").concat(countryFlags, "'>  \n        <p>\u041C\u043E\u0432\u0430: ").concat(countryLanguages, "</p>  \n    ");
+}
+function renderCountriesList(countries) {
+  getDataContainer.innerHTML = countries.map(function (country) {
+    return "<p>".concat(country.name.official, "</p>");
+  }).join('');
+}
+getInput.addEventListener('input', showCountriesData);
 },{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -228,7 +250,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57535" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62610" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

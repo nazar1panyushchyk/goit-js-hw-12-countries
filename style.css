@@ -1,0 +1,15 @@
+body {
+    background-color: rgb(11, 62, 62);
+}
+
+p {
+    font-size: 20pt;
+}
+
+.countries-container {
+    text-align: center;
+    background-color: aquamarine;
+    max-width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
